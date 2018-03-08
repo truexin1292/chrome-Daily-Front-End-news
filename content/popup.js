@@ -1,9 +1,8 @@
 chrome.runtime.sendMessage(
   {
-    action: 'getPath',
+    action: 'initPopup',
   },
   res => {
     NewsCard.init(res);
-    NewsCard.getCurrNew(res[res.length - 1]);
   }
 );

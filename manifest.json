@@ -16,10 +16,10 @@
 
   "background": {
     "scripts": [
-      "background/utils.js",
+      "utils/date.js",
       "background/API.js",
       "background/News.js",
-      "background/background.js"
+      "background/index.js"
     ]
   },
 

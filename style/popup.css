@@ -6,13 +6,28 @@ html {
   overflow: hidden;
 }
 
-#path {
-  display: none;
-}
-
 #new-card {
   margin: 0 0 40px;
   position: relative;
+}
+
+.publish-date {
+  position: absolute;
+  left: 14px;
+  bottom: -29px;
+  text-align: center;
+  color: #999;
+}
+
+#path {
+  display: inline-block;
+}
+
+.pagination {
+  position: relative;
+  top: 12px;
+  text-align: center;
+  color: #999;
 }
 
 blockquote {
@@ -23,6 +38,27 @@ blockquote {
   background: #00bcd4;
 }
 
+#read-more {
+  margin-top: -6px;
+  padding-right: 3px;
+  height: 28px;
+  text-decoration: none;
+  line-height: 28px;
+  background: #fff;  
+}
+
+#read-more::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  width: 0;
+  height: 0;
+  border-top: 14px solid transparent;
+  border-right: 28px solid #fff;
+  border-bottom: 14px solid transparent;
+}
+
+#read-more,
 .card-arrow {
   position: absolute;
   top: 30px;
@@ -35,6 +71,7 @@ blockquote {
   left: 25px;
 }
 
+#read-more,
 #right-arrow {
   right: 25px;
 }
