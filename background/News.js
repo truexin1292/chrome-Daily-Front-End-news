@@ -1,5 +1,6 @@
 class News {
-  constructor(url) {
+  constructor(repository, url) {
+    this.repository = repository;
     this.url = url;
   }
 
@@ -7,16 +8,16 @@ class News {
     return JSON.parse(localStorage.getItem('FEDN-content'));
   }
 
-  static saveNew(news) {
-    localStorage.setItem('FEDN-content', news);
+  static saveNews(news) {
+    localStorage.setItem('FEDN-content', JSON.stringify(news));
   }
 
   static getPaths() {
     return JSON.parse(localStorage.getItem('FEDN-path'));
   }
 
-  static savePath(paths) {
-    localStorage.setItem('FEDN-path', paths);
+  static savePaths(paths) {
+    localStorage.setItem('FEDN-path', JSON.stringify(paths));
   }
 
   async getCurrNew(path) {
@@ -25,15 +26,19 @@ class News {
     let curr = record && record.text;
 
     if (!curr) {
-      const text = await fetch(this.url, {
-        method: 'GET',
-      }).then(res => res.text());
+      try {
+        const text = await fetch(this.url, {
+          method: 'GET',
+        }).then(res => res.text());
 
-      curr = await GITHUB.getMarkdown(text);
-      news.push({ path, text: curr });
-      News.saveNew(JSON.stringify(news));
+        curr = await GITHUB.getMarkdown(text);
+        news.push({ path, text: curr });
+        News.saveNews(news.length > 3 ? news.slice(1) : news);
+      } catch (err) {
+        console.error(err);
+      }
     }
 
-    return { path, text: curr };
+    return { repository: this.repository, path, text: curr };
   }
 }
