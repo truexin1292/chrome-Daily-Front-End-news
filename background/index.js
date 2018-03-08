@@ -21,20 +21,11 @@ async function handleMessage(message, sender, sendResponse) {
           const days = await GITHUB.getContent(
             `history/${lastYear}/${lastMonth}`
           );
-          const lastDay = days[days.length - 1];
-          const year = currDate.slice(0, 2);
-          const month = currDate.slice(3, 5);
-          const day = currDate.slice(-2);
 
-          if (days.includes(day) && month === lastMonth && year === lastYear) {
-            paths.push(`${lastYear}/${lastMonth}/${day}`);
-          } else {
-            if (paths.length === 0 || paths[paths.length - 1] !== lastDay) {
-              paths.push(`${lastYear}/${lastMonth}/${lastDay}`);
-            }
-          }
-
-          const newPaths = paths.length > 3 ? paths.slice(1) : paths;
+          const firstThreePaths = days.length > 3 ? days.slice(-3) : days;
+          const newPaths = firstThreePaths.map(
+            day => `${lastYear}/${lastMonth}/${day}`
+          );
 
           News.savePaths(newPaths);
           sendResponse(newPaths);
